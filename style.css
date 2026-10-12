@@ -3,3 +3,33 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container button{
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.container span {
+    background-color: red;
+    font-size: 2rem;
+    padding: 1rem;
+    display: flex;
+    text-align: center;
+}
+.container .layer {
+    display: flex;
+}
