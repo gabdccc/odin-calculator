@@ -17,17 +17,17 @@ const operator = "";
 
 function operate(operator, num, num2) {
   switch (operator) {
-    case "addition":
+    case "+":
       return add(num, num2);
-    case "subtraction":
+    case "-":
       return subtract(num, num2);
-    case "multiplication":
+    case "*":
       return multiply(num, num2);
-    case "division":
+    case "/":
       return divide(num, num2);
 
     default:
-      return "please pick from the following blablba";
+      return;
   }
 }
 
@@ -60,26 +60,13 @@ numberButtons.forEach((button) => {
         return;
 
       case "=": {
-        const secondNumber = Number(numbers);
-        let result;
-
-        switch (operatorGuide) {
-          case "+":
-            result = firstNumber + secondNumber;
-            break;
-          case "-":
-            result = firstNumber - secondNumber;
-            break;
-          case "*":
-            result = firstNumber * secondNumber;
-            break;
-          case "/":
-            result = firstNumber / secondNumber;
-            break;
-
-          default:
-            return;
+        if (!operatorGuide || firstNumber === null || numbers === "") {
+          return;
         }
+
+        const secondNumber = Number(numbers);
+
+        const result = operate(operatorGuide, firstNumber, secondNumber);
 
         total.textContent = result;
         numbers = String(result);
