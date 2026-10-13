@@ -11,8 +11,8 @@ function divide(num, num2 = num) {
   return num / num2;
 }
 
-let firstNumber = 3;
-let secondNumber = 5;
+let first2Number = 3;
+let second2Number = 5;
 const operator = "";
 
 function operate(operator, num, num2) {
@@ -33,29 +33,81 @@ function operate(operator, num, num2) {
 
 const numberButtons = document.querySelectorAll("button");
 const total = document.querySelector(".total");
+const opera = document.querySelectorAll(".opera");
+
+let numbers = "";
+let firstNumber = null;
+let operatorGuide = 0;
+
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    switch (button.textContent) {
+    const value = button.textContent;
+
+    switch (value) {
       case "+":
-        total.textContent = "Addition";
-        break;
       case "-":
-        total.textContent = "Subtraction";
-        break;
       case "*":
-        total.textContent = "Multiplication";
-        break;
       case "/":
-        total.textContent = "Division";
-        break;
-      case "=":
-        total.textContent = "Enter";
-        break;
+        firstNumber = Number(numbers || total.textContent);
+        operatorGuide = value;
+        numbers = "";
+
+        opera.forEach((op) => {
+          op.style.backgroundColor = "WHITE";
+        });
+
+        button.style.backgroundColor = "RED";
+        return;
+
+      case "=": {
+        const secondNumber = Number(numbers);
+        let result;
+
+        switch (operatorGuide) {
+          case "+":
+            result = firstNumber + secondNumber;
+            break;
+          case "-":
+            result = firstNumber - secondNumber;
+            break;
+          case "*":
+            result = firstNumber * secondNumber;
+            break;
+          case "/":
+            result = firstNumber / secondNumber;
+            break;
+
+          default:
+            return;
+        }
+
+        total.textContent = result;
+        numbers = String(result);
+        firstNumber = null;
+        operatorGuide = "";
+
+        opera.forEach((op) => {
+          op.style.backgroundColor = "WHITE";
+        });
+
+        return;
+      }
+
+      case "CLR":
+        numbers = "";
+        firstNumber = null;
+        operatorGuide = "";
+        total.textContent = 0;
+
+        opera.forEach((op) => {
+          op.style.backgroundColor = "WHITE";
+        });
+
+        return;
 
       default:
-        total.textContent = Number(button.textContent);
-        firstNumber = Number(button.textContent);
-        break;
+        numbers += value;
+        total.textContent = numbers;
     }
   });
 });
