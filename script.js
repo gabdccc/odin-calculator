@@ -9,7 +9,7 @@ function multiply(num, num2) {
 }
 function divide(num, num2) {
   if (num2 === 0) {
-    return "Cannot Divide by Zero";
+    return "ERROR";
   }
   return num / num2;
 }
@@ -46,8 +46,8 @@ function testing() {
 }
 
 const btnNumber = document.querySelectorAll("button");
-const total = document.querySelector(".total");
-const total2 = document.querySelector(".total2");
+const total = document.querySelector(".firstNumberContainer");
+const total2 = document.querySelector(".secondNumberContainer");
 const opir = document.querySelector(".operatory");
 let firstNumber = "";
 let secondNumber = "";
@@ -112,14 +112,13 @@ btnNumber.forEach((btn) => {
         if (sample === true) {
           if (secondNumber === "") {
             secondNumber = firstNumber;
-          } else {
-            oldSecondNumber = secondNumber;
           }
+          oldSecondNumber = secondNumber;
 
           testing();
           sample = false;
           pastResulta = true;
-        } else if (oldSecondNumber !== "") {
+        } else if (oldSecondNumber !== "" && operation !== undefined) {
           secondNumber = oldSecondNumber;
           testing();
           pastResulta = true;
@@ -143,6 +142,32 @@ btnNumber.forEach((btn) => {
         total2.textContent = "";
         break;
 
+      case "<":
+        if (palit === false && firstNumber !== "") {
+          if (pastResulta === true) {
+            oldSecondNumber = "";
+            pastResulta = false;
+          }
+
+          firstNumber = firstNumber.slice(0, -1);
+          total.textContent = firstNumber;
+        } else if (palit === true && secondNumber !== "") {
+          secondNumber = secondNumber.slice(0, -1);
+
+          if (secondNumber === "") {
+            secondNumber = "0";
+          }
+
+          total2.textContent = secondNumber;
+        }
+
+        break;
+
+      case "P":
+        break;
+      case "S":
+        break;
+
       default:
         if (palit === false) {
           if (pastResulta === true) {
@@ -151,10 +176,28 @@ btnNumber.forEach((btn) => {
             pastResulta = false;
           }
 
-          firstNumber += btn.textContent;
+          if (firstNumber === "0" && btn.textContent === "0") {
+            return;
+          }
+
+          if (firstNumber === "0" && btn.textContent !== ".") {
+            firstNumber = btn.textContent;
+          } else {
+            firstNumber += btn.textContent;
+          }
+
           total.textContent = firstNumber;
         } else {
-          secondNumber += btn.textContent;
+          if (secondNumber === "0" && btn.textContent === "0") {
+            return;
+          }
+
+          if (secondNumber === "0" && btn.textContent !== ".") {
+            secondNumber = btn.textContent;
+          } else {
+            secondNumber += btn.textContent;
+          }
+
           total2.textContent = secondNumber;
         }
 
